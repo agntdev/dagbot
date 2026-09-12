@@ -1,0 +1,20 @@
+[
+  {
+    "name": "⚙️ Настройки",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Open simple preferences (e.g., session length toggle, privacy/data deletion request)"
+            }
+          }
+        ],
+        "send": {
+          "callback": "settings:open"
+        }
+      }
+    ]
+  }
+]
