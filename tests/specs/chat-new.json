@@ -1,0 +1,20 @@
+[
+  {
+    "name": "💬 Новый чат",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Clear recent conversation context and start fresh"
+            }
+          }
+        ],
+        "send": {
+          "callback": "chat:new"
+        }
+      }
+    ]
+  }
+]
