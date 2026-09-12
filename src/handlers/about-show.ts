@@ -1,17 +1,17 @@
 import { Composer } from "grammy";
+import type { Ctx } from "../bot.js";
+import { inlineButton, inlineKeyboard, registerMainMenuItem } from "../toolkit/index.js";
 
-// SCAFFOLD — generated from the bot blueprint BEFORE the agent runs.
-// Keep a LIVE registration (.command / .callbackQuery / …) so this feature is
-// never an empty stub. Replace the reply body with real logic + copy; if you
-// change the user-facing text, update tests/specs to match EXACTLY.
-// Do NOT rewrite src/bot.ts — buildBot() already auto-loads this module.
-// Menu: wire this into /start via registerMainMenuItem({ label: "ℹ️ О боте", data: "about:show" }) if the toolkit exposes it.
+registerMainMenuItem({ label: "ℹ️ О боте", data: "about:show", order: 50 });
 
-const composer = new Composer();
+const composer = new Composer<Ctx>();
 
 composer.callbackQuery("about:show", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("Show short about text and supported languages");
+  await ctx.reply(
+    "Я местный собеседник: помогу спокойно обсудить вопрос и не потерять нить разговора.\n\nПоддерживаю русский, дагестанский вариант и азербайджанский.",
+    { reply_markup: inlineKeyboard([[inlineButton("⬅️ В меню", "menu:main")]]) },
+  );
 });
 
 export default composer;

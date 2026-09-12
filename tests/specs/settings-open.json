@@ -1,20 +1,14 @@
 [
   {
-    "name": "⚙️ Настройки",
+    "name": "settings save retention and delete data",
     "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Open simple preferences (e.g., session length toggle, privacy/data deletion request)"
-            }
-          }
-        ],
-        "send": {
-          "callback": "settings:open"
-        }
-      }
+      { "send": { "text": "/start" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "lang:set:ru" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "settings:open" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Здесь всё под твоим контролем. Сейчас храню 20 последних сообщений; история включена." } }] },
+      { "send": { "callback": "settings:length:10" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Готово, буду хранить 10 последних сообщений." } }] },
+      { "send": { "callback": "settings:persist:off" }, "expect": [{ "method": "sendMessage", "payload": { "text": "История выключена и очищена. Я не буду сохранять новые сообщения." } }] },
+      { "send": { "callback": "settings:delete" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Удалить язык, настройки и историю без возможности вернуть их?" } }] },
+      { "send": { "callback": "settings:delete:confirm" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Твои язык, настройки и история удалены. Когда захочешь вернуться, нажми /start." } }] }
     ]
   }
 ]

@@ -1,20 +1,11 @@
 [
   {
-    "name": "🧠 Задать вопрос",
+    "name": "question is answered in the selected language",
     "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Prompt user for a free-text question (ForceReply or open text entry)"
-            }
-          }
-        ],
-        "send": {
-          "callback": "chat:ask"
-        }
-      }
+      { "send": { "text": "/start" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Кто ты по национальности?" } }] },
+      { "send": { "callback": "lang:set:az" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Tanış olduğumuza şadam. Yazın, sizə azərbaycanca cavab verəcəyəm." } }] },
+      { "send": { "callback": "chat:ask" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Напиши свой вопрос — я внимательно прочитаю." } }] },
+      { "send": { "text": "Necəsən?" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Sizi başa düşdüm. Hazırda qısa söhbət rejimindəyəm: “Necəsən?”." } }] }
     ]
   }
 ]
