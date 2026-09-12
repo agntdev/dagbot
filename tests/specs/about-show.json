@@ -1,20 +1,5 @@
 [
-  {
-    "name": "ℹ️ О боте",
-    "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Show short about text and supported languages"
-            }
-          }
-        ],
-        "send": {
-          "callback": "about:show"
-        }
-      }
-    ]
-  }
+  { "name": "about explains supported languages", "steps": [
+    { "send": { "callback": "about:show" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Я местный собеседник: помогу спокойно обсудить вопрос и не потерять нить разговора.\n\nПоддерживаю русский, дагестанский вариант и азербайджанский." } }] }
+  ] }
 ]

@@ -1,17 +1,24 @@
 import { Composer } from "grammy";
+import type { Ctx } from "../bot.js";
+import { registerMainMenuItem } from "../toolkit/index.js";
+import { activeProfile, clearConversation } from "../conversation.js";
 
-// SCAFFOLD — generated from the bot blueprint BEFORE the agent runs.
-// Keep a LIVE registration (.command / .callbackQuery / …) so this feature is
-// never an empty stub. Replace the reply body with real logic + copy; if you
-// change the user-facing text, update tests/specs to match EXACTLY.
-// Do NOT rewrite src/bot.ts — buildBot() already auto-loads this module.
-// Menu: wire this into /start via registerMainMenuItem({ label: "💬 Новый чат", data: "chat:new" }) if the toolkit exposes it.
+registerMainMenuItem({ label: "💬 Новый чат", data: "chat:new", order: 10 });
 
-const composer = new Composer();
+const composer = new Composer<Ctx>();
 
 composer.callbackQuery("chat:new", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("Clear recent conversation context and start fresh");
+  const profile = activeProfile(ctx);
+  if (!profile) {
+    await ctx.reply("Сначала выбери язык — потом начнём новый разговор.");
+    return;
+  }
+  clearConversation(ctx, profile);
+  ctx.session.step = "awaiting_question";
+  await ctx.reply("Начали с чистого листа. Напиши, что хочешь обсудить.", {
+    reply_markup: { force_reply: true, input_field_placeholder: "Напиши вопрос…" },
+  });
 });
 
 export default composer;

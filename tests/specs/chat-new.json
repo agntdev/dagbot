@@ -1,20 +1,10 @@
 [
   {
-    "name": "💬 Новый чат",
+    "name": "new chat clears context and invites a question",
     "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Clear recent conversation context and start fresh"
-            }
-          }
-        ],
-        "send": {
-          "callback": "chat:new"
-        }
-      }
+      { "send": { "text": "/start" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Кто ты по национальности?" } }] },
+      { "send": { "callback": "lang:set:ru" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "chat:new" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Начали с чистого листа. Напиши, что хочешь обсудить." } }] }
     ]
   }
 ]

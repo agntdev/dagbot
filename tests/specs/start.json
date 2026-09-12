@@ -1,15 +1,18 @@
 [
   {
-    "name": "/start replies with the welcome + main menu",
+    "name": "first /start asks for nationality",
     "steps": [
       {
         "send": { "text": "/start" },
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": { "text": "👋 Welcome! Tap a button below to get started." }
-          }
-        ]
+        "expect": [{ "method": "sendMessage", "payload": { "text": "Кто ты по национальности?" } }]
+      },
+      {
+        "send": { "callback": "lang:set:ru" },
+        "expect": [{ "method": "sendMessage", "payload": { "text": "Рад знакомству. Пиши — я рядом и отвечу по-русски." } }]
+      },
+      {
+        "send": { "text": "/start" },
+        "expect": [{ "method": "sendMessage", "payload": { "text": "Выбирай, с чего начнём." } }]
       }
     ]
   }

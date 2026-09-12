@@ -1,20 +1,21 @@
 [
   {
-    "name": "🌐 Сменить язык",
+    "name": "language switch keeps the chat and changes replies",
     "steps": [
-      {
-        "expect": [
-          {
-            "method": "sendMessage",
-            "payload": {
-              "text": "Re-open nationality/language selection buttons"
-            }
-          }
-        ],
-        "send": {
-          "callback": "lang:choose"
-        }
-      }
+      { "send": { "text": "/start" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "lang:set:ru" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "lang:choose" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Кто ты по национальности?" } }] },
+      { "send": { "callback": "lang:set:dag" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Готово, теперь отвечаю на дагестанском варианте. История чата сохранена." } }] },
+      { "send": { "callback": "chat:ask" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "text": "Салам" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Сизни гъалатI угъай. Азыр мен къыска суал-жувап режиминде ишлеймен: «Салам»." } }] }
+    ]
+  },
+  {
+    "name": "unsupported language offers supported alternatives",
+    "steps": [
+      { "send": { "text": "/start" }, "expect": [{ "method": "sendMessage" }] },
+      { "send": { "callback": "lang:other" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Напиши, на каком языке тебе удобнее общаться." } }] },
+      { "send": { "text": "лезгинский" }, "expect": [{ "method": "sendMessage", "payload": { "text": "Пока я уверенно говорю по-русски, на дагестанском варианте и по-азербайджански. Выбери подходящий язык в меню — я сразу переключусь." } }] }
     ]
   }
 ]
